@@ -145,6 +145,11 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
         state.error = null;
+
+        // Save token for API requests
+        if (action.payload.token) {
+          localStorage.setItem('token', action.payload.token);
+        } 
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

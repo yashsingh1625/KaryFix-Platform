@@ -13,6 +13,12 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
   },
   (error) => {
@@ -27,7 +33,6 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid - could dispatch logout action here
       console.error('Unauthorized - redirecting to login');
     }
     return Promise.reject(error);
