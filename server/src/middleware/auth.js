@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 // Protect routes - Check if user is authenticated
 exports.requireAuth = asyncHandler(async (req, res, next) => {
-  let token;
+  
 
   // Check for token in cookies
   let token;
