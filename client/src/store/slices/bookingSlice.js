@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-
+import api from '../../services/api';
 // Create booking
 export const createBooking = createAsyncThunk(
   'bookings/createBooking',
   async (bookingData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/bookings`,
+      const response = await api.post(
+        `/bookings`,
         bookingData,
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
@@ -36,9 +33,9 @@ export const getMyBookings = createAsyncThunk(
       if (page) queryParams.append('page', page);
       if (limit) queryParams.append('limit', limit);
 
-      const response = await axios.get(
-        `${API_URL}/bookings/my-bookings?${queryParams.toString()}`,
-        { withCredentials: true }
+      const response = await api.get(
+        `/bookings/my-bookings?${queryParams.toString()}`,
+        
       );
       return response.data;
     } catch (error) {
@@ -56,9 +53,7 @@ export const getBookingById = createAsyncThunk(
   'bookings/getBookingById',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.get(`${API_URL}/bookings/${id}`, {
-        withCredentials: true,
-      });
+      const response = await api.get(`/bookings/${id}`);     
       return response.data.data;
     } catch (error) {
       const message =
@@ -75,10 +70,10 @@ export const updateBookingStatus = createAsyncThunk(
   'bookings/updateBookingStatus',
   async ({ id, status, note }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/bookings/${id}/status`,
+      const response = await api.put(
+        `/bookings/${id}/status`,
         { status, note },
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
@@ -96,10 +91,10 @@ export const updateBookingPrice = createAsyncThunk(
   'bookings/updateBookingPrice',
   async ({ id, finalPrice }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/bookings/${id}/price`,
+      const response = await api.put(
+        `/bookings/${id}/price`,
         { finalPrice },
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
@@ -117,10 +112,10 @@ export const addBookingPhotos = createAsyncThunk(
   'bookings/addBookingPhotos',
   async ({ id, photos }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/bookings/${id}/photos`,
+      const response = await api.post(
+        `/bookings/${id}/photos`,
         { photos },
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
@@ -138,10 +133,10 @@ export const addBookingReview = createAsyncThunk(
   'bookings/addBookingReview',
   async ({ id, score, review }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/bookings/${id}/review`,
+      const response = await api.post(
+        `/bookings/${id}/review`,
         { score, review },
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
@@ -165,9 +160,9 @@ export const getAvailableBookings = createAsyncThunk(
       if (page) queryParams.append('page', page);
       if (limit) queryParams.append('limit', limit);
 
-      const response = await axios.get(
-        `${API_URL}/bookings/available?${queryParams.toString()}`,
-        { withCredentials: true }
+      const response = await api.get(
+        `/bookings/available?${queryParams.toString()}`,
+        
       );
       return response.data;
     } catch (error) {
@@ -185,10 +180,10 @@ export const requestBooking = createAsyncThunk(
   'bookings/requestBooking',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/bookings/${id}/request`,
+      const response = await api.put(
+        `/bookings/${id}/request`,
         {},
-        { withCredentials: true }
+        
       );
       return response.data;
     } catch (error) {
@@ -206,10 +201,10 @@ export const approveBookingRequest = createAsyncThunk(
   'bookings/approveBookingRequest',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/bookings/${id}/approve`,
+      const response = await api.put(
+        `/bookings/${id}/approve`,
         {},
-        { withCredentials: true }
+        
       );
       return response.data;
     } catch (error) {
@@ -238,9 +233,9 @@ export const getAllBookings = createAsyncThunk(
       if (page) queryParams.append('page', page);
       if (limit) queryParams.append('limit', limit);
 
-      const response = await axios.get(
-        `${API_URL}/bookings/admin/all?${queryParams.toString()}`,
-        { withCredentials: true }
+      const response = await api.get(
+        `/bookings/admin/all?${queryParams.toString()}`,
+        
       );
       return response.data;
     } catch (error) {
@@ -258,9 +253,7 @@ export const getBookingStats = createAsyncThunk(
   'bookings/getBookingStats',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(`${API_URL}/bookings/admin/stats`, {
-        withCredentials: true,
-      });
+      const response = await api.get(`/bookings/admin/stats`);
       return response.data.data;
     } catch (error) {
       const message =
@@ -277,10 +270,10 @@ export const assignTechnician = createAsyncThunk(
   'bookings/assignTechnician',
   async ({ id, technicianId }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${API_URL}/bookings/${id}/assign`,
+      const response = await api.put(
+        `/bookings/${id}/assign`,
         { technicianId },
-        { withCredentials: true }
+        
       );
       return response.data.data;
     } catch (error) {
